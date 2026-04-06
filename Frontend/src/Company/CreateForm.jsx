@@ -740,32 +740,34 @@ const CreateForm = () => {
                 <label className="block text-sm font-semibold text-gray-700 mb-1.5">
                   Start Date <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="date"
-                  placeholder="dd-mm-yy"
-                  value={startDate}
-                  min={new Date().toISOString().split("T")[0]}
-                  onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full box-border border border-gray-200 rounded-lg px-2.5 py-2.5 text-sm
-      text-gray-800 outline-none focus:ring-2 focus:ring-emerald-500
-      focus:border-emerald-500 cursor-pointer"
-                />
+
+                <div className="w-full overflow-hidden rounded-lg border border-gray-200">
+                  <input
+                    type="date"
+                    value={startDate}
+                    min={new Date().toISOString().split("T")[0]}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    className="w-full min-w-0 max-w-full appearance-none px-2 py-2.5 text-sm
+        text-gray-800 outline-none focus:ring-2 focus:ring-emerald-500"
+                  />
+                </div>
               </div>
 
               <div className="min-w-0">
                 <label className="block text-sm font-semibold text-gray-700 mb-1.5">
                   End Date <span className="text-red-500">*</span>
                 </label>
-                <input
-                  type="date"
-                  placeholder="dd-mm-yy"
-                  value={endDate}
-                  min={startDate || new Date().toISOString().split("T")[0]}
-                  onChange={(e) => setEndDate(e.target.value)}
-                  className="w-full box-border border border-gray-200 rounded-lg px-2.5 py-2.5 text-sm
-      text-gray-800 outline-none focus:ring-2 focus:ring-emerald-500
-      focus:border-emerald-500 cursor-pointer"
-                />
+
+                <div className="w-full overflow-hidden rounded-lg border border-gray-200">
+                  <input
+                    type="date"
+                    value={endDate}
+                    min={startDate || new Date().toISOString().split("T")[0]}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    className="w-full min-w-0 max-w-full appearance-none px-2 py-2.5 text-sm
+        text-gray-800 outline-none focus:ring-2 focus:ring-emerald-500"
+                  />
+                </div>
               </div>
             </div>
 
