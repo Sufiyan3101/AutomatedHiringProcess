@@ -253,7 +253,7 @@ const FieldCard = ({
                 onChange={(e) => updateLabel(e.target.value)}
                 onClick={(e) => e.stopPropagation()}
                 placeholder="Question"
-                className="flex-1 text-base font-medium text-gray-800 bg-gray-50 border-b-2 border-emerald-500 outline-none px-2 py-1.5 rounded-t"
+                className="w-1/2 sm:flex-1 text-base font-medium text-gray-800 bg-gray-50 border-b-2 border-emerald-500 outline-none px-2 py-1.5 rounded-t"
               />
               <select
                 value={field.type}
@@ -601,8 +601,8 @@ const CreateForm = () => {
       </div>
 
       {/* ── MAIN LAYOUT ── */}
-      <div className="flex flex-1 justify-center px-4 py-6 max-w-3xl mx-auto w-full">
-        <div className="flex-1 space-y-3">
+      <div className="flex flex-1 justify-center px-4 py-6">
+        <div className="w-full max-w-3xl space-y-3">
           {/* Header Card */}
           <div className="bg-white rounded-lg shadow-sm border-t-8 border-emerald-600 overflow-hidden">
             <div className="p-6">
@@ -743,9 +743,9 @@ const CreateForm = () => {
                 <input
                   type="date"
                   value={startDate}
-                  min={new Date().toISOString().split("T")[0]} // can't pick past dates
+                  min={new Date().toISOString().split("T")[0]} 
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm
+                  className="w-[95%] sm:w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm
                   text-gray-800 outline-none focus:ring-2 focus:ring-emerald-500
                   focus:border-emerald-500 cursor-pointer"
                 />
@@ -759,7 +759,7 @@ const CreateForm = () => {
                   value={endDate}
                   min={startDate || new Date().toISOString().split("T")[0]}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm
+                  className="w-[95%] sm:w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm
                   text-gray-800 outline-none focus:ring-2 focus:ring-emerald-500
                   focus:border-emerald-500 cursor-pointer"
                 />

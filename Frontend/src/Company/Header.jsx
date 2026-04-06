@@ -38,12 +38,12 @@ const Header = () => {
     navigate("/login");
   }
   return (
-    <div className="flex relative pb-2 bg-emerald-950">
+    <div className="flex relative py-3 bg-emerald-950">
       <div className="absolute bottom-0 left-0 w-full h-0.5 bg-linear-to-r from-blue-500 via-purple-500 to-pink-500"></div>
-      <div className="w-24 flex-none flex justify-center items-center p-2.5 font-bold text-white">
+      <div className="w-20 sm:w-24 flex-none flex justify-center items-center p-1 sm:p-2.5 font-bold text-white">
         {companyData.companyName}
       </div>
-      <div className="w-5/6 flex-1 flex justify-center items-center p-2.5 gap-2.5 sm:gap-10">
+      <div className="w-5/6 flex-1 flex justify-center items-center p-1 sm:p-2.5 gap-1 sm:gap-10">
         <NavLink to="/dashboard">
           {({ isActive }) => (
             <div
@@ -72,9 +72,9 @@ const Header = () => {
           )}
         </NavLink>
       </div>
-      <div className="w-24 p-2.5 flex-none items-center flex justify-center">
+      <div className="w-20 sm:w-24 p-1 sm:p-2.5 flex-none items-center flex justify-center">
         <button
-          className="signOut w-full h-9/12 border rounded-md px-1 border-red-400 bg-red-400 text-white font-semibold hover:cursor-pointer hover:bg-red-500 flex items-center justify-center"
+          className="signOut w-[98%] h-9/12 border rounded-md px-1 border-red-400 bg-red-400 text-white font-semibold hover:cursor-pointer hover:bg-red-500 flex items-center justify-center"
           onClick={() => {
             doSignOut().then(() => {
               navigate("/login");
