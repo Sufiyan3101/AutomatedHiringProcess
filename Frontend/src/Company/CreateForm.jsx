@@ -743,13 +743,14 @@ const CreateForm = () => {
                 <input
                   type="date"
                   value={startDate}
-                  min={new Date().toISOString().split("T")[0]} 
+                  min={new Date().toISOString().split("T")[0]}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="w-[95%] sm:w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm
-                  text-gray-800 outline-none focus:ring-2 focus:ring-emerald-500
-                  focus:border-emerald-500 cursor-pointer"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm
+      text-gray-800 outline-none focus:ring-2 focus:ring-emerald-500
+      focus:border-emerald-500 cursor-pointer"
                 />
               </div>
+
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-1.5">
                   End Date <span className="text-red-500">*</span>
@@ -759,9 +760,9 @@ const CreateForm = () => {
                   value={endDate}
                   min={startDate || new Date().toISOString().split("T")[0]}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="w-[95%] sm:w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm
-                  text-gray-800 outline-none focus:ring-2 focus:ring-emerald-500
-                  focus:border-emerald-500 cursor-pointer"
+                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm
+      text-gray-800 outline-none focus:ring-2 focus:ring-emerald-500
+      focus:border-emerald-500 cursor-pointer"
                 />
               </div>
             </div>
