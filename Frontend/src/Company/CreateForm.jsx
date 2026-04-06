@@ -736,31 +736,33 @@ const CreateForm = () => {
 
             {/* Start + End Date */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
+              <div className="min-w-0">
                 <label className="block text-sm font-semibold text-gray-700 mb-1.5">
                   Start Date <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="date"
+                  placeholder="dd-mm-yy"
                   value={startDate}
                   min={new Date().toISOString().split("T")[0]}
                   onChange={(e) => setStartDate(e.target.value)}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm
+                  className="w-full box-border border border-gray-200 rounded-lg px-2.5 py-2.5 text-sm
       text-gray-800 outline-none focus:ring-2 focus:ring-emerald-500
       focus:border-emerald-500 cursor-pointer"
                 />
               </div>
 
-              <div>
+              <div className="min-w-0">
                 <label className="block text-sm font-semibold text-gray-700 mb-1.5">
                   End Date <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="date"
+                  placeholder="dd-mm-yy"
                   value={endDate}
                   min={startDate || new Date().toISOString().split("T")[0]}
                   onChange={(e) => setEndDate(e.target.value)}
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm
+                  className="w-full box-border border border-gray-200 rounded-lg px-2.5 py-2.5 text-sm
       text-gray-800 outline-none focus:ring-2 focus:ring-emerald-500
       focus:border-emerald-500 cursor-pointer"
                 />
