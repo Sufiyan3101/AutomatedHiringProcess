@@ -5,9 +5,7 @@ import { doc, getDoc } from "firebase/firestore";
 
 // useCompanySetup.js
 const useCompanySetup = () => {
-  // null  = not checked yet (show spinner)
-  // true  = checked, has details
-  // false = checked, no details
+
   const [hasDetails, setHasDetails] = useState(null); // ← null instead of false
 
   useEffect(() => {
@@ -33,7 +31,7 @@ const useCompanySetup = () => {
   }, []);
 
   // null = still loading, true/false = done
-  return { loading: hasDetails === null, hasDetails };
+  return { setUpLoading: hasDetails === null, hasDetails };
 };
 
 export default useCompanySetup;

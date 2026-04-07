@@ -13,27 +13,27 @@ const Register = () => {
   const [showAlert, setShowAlert] = useState(false);
 
   const onSubmit = async (e) => {
-      e.preventDefault();
-  
-      if (isRegistering) return;
-  
-      if (password !== confirmPassword) {
-        setErrorMessage("Passwords do not match");
-        setShowAlert(true);
-        return;
-      }
-  
-      try {
-        setIsRegistering(true);
-        await doCreateUserWithEmailAndPassword(email, password);
-        await doSignOut();
-        navigate("/login");
-      } catch (error) {
-        setErrorMessage(error.message || "Registration failed");
-        setShowAlert(true);
-        setIsRegistering(false);
-      }
-    };
+    e.preventDefault();
+
+    if (isRegistering) return;
+
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwords do not match");
+      setShowAlert(true);
+      return;
+    }
+
+    try {
+      setIsRegistering(true);
+      await doCreateUserWithEmailAndPassword(email, password);
+      await doSignOut();
+      navigate("/login");
+    } catch (error) {
+      setErrorMessage(error.message || "Registration failed");
+      setShowAlert(true);
+      setIsRegistering(false);
+    }
+  };
 
   const loginNav = () => {
     navigate("/login");
@@ -43,61 +43,122 @@ const Register = () => {
     <>
       {/* {userLoggedIn && <Navigate to="/dashboard" replace={true} />} */}
 
-      {showAlert && (
-          <div className="absolute flex w-fit h-fit bg-red-500 top-2/5 left-2/5 rounded-2xl">
-            <div className="w-80 p-4 min-h-fit">
-              <p className="text-lg font-bold text-white">Alert Message</p>
-              <p className="text-sm text-white">{errorMessage}</p>
-              <button onClick={() => setShowAlert(false)} className="ml-60 mt-5 border border-white text-white w-10 h-fit rounded-md text-sm hover:cursor-pointer hover:bg-green-400  duration-500 ease-in-out">OK</button>
+      <div className="relative flex justify-center items-center min-h-screen bg-emerald-950 px-4">
+        {/* ── Alert ── */}
+        {showAlert && (
+          <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/40">
+            <div className="bg-red-500 rounded-2xl p-5 w-80 shadow-xl">
+              <p className="text-lg font-bold text-white mb-1">Alert</p>
+              <p className="text-sm text-white mb-5">{errorMessage}</p>
+              <div className="flex justify-end">
+                <button
+                  onClick={() => setShowAlert(false)}
+                  className="px-4 py-1.5 border border-white text-white text-sm rounded-lg
+              hover:bg-white hover:text-red-500 transition-all duration-300 cursor-pointer"
+                >
+                  OK
+                </button>
+              </div>
             </div>
           </div>
         )}
 
-      <div className="flex justify-center items-center h-screen bg-emerald-950">
-        <div className="w-11/12 sm:w-3/4 md:w-2/5 h-7/12 bg-transparent border rounded-xl border-white text-white flex items-center flex-col p-2">
-          <div className="h-fit text-center text-2xl font-bold">Register</div>
-          <form className="flex flex-col mt-2.5 h-3/4 min-w-11/12 p-2.5">
-            <label className="font-semibold">Email *</label>
-            <input
-              type="email"
-              placeholder="Enter your email..."
-              value={email}
-              onChange={(e)=>setEmail(e.target.value)}
-              required
-              className="border rounded-md pl-1 text-xs h-10 border-gray-500 mt-2 hover:border-white focus:border-gray-500 focus:outline-none focus:ring-0"
-            />
-            <label className="font-semibold mt-2">Password *</label>
-            <input
-              type="password"
-              placeholder="Enter your password..."
-              value={password}
-              onChange={(e)=>setPassword(e.target.value)}
-              required
-              className="border rounded-md pl-1 text-xs h-10 border-gray-500 mt-2 hover:border-white focus:border-gray-500 focus:outline-none focus:ring-0"
-            />
-            <label className="font-semibold mt-2">Confirm Password *</label>
-            <input
-              type="password"
-              placeholder="Confirm your password..."
-              value={confirmPassword}
-              onChange={(e)=>setConfirmPassword(e.target.value)}
-              required
-              className="border rounded-md pl-1 text-xs h-10 border-gray-500 mt-2 hover:border-white focus:border-gray-500 focus:outline-none focus:ring-0"
-            />
-            <button className="border rounded-md border-gray-500 mt-4 h-7 hover:bg-green-500 hover:border-green-500 cursor-pointer duration-500 ease-in-out ani" onClick={onSubmit}>
+        {/* ── Card ── */}
+        <div
+          className="w-full max-w-sm bg-transparent border border-white/20 rounded-2xl p-8
+    shadow-lg backdrop-blur-sm"
+        >
+          {/* Header */}
+          <div className="text-center mb-7">
+            <h1 className="text-2xl font-bold text-white">Create Account</h1>
+            <p className="text-emerald-400 text-sm mt-1">
+              Sign up to get started
+            </p>
+          </div>
+
+          {/* Form */}
+          <div className="flex flex-col gap-4">
+            {/* Email */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-white text-sm font-semibold">
+                Email <span className="text-emerald-400">*</span>
+              </label>
+              <input
+                type="email"
+                placeholder="Enter your email..."
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="bg-white/5 border border-white/20 rounded-lg px-3 py-2 text-white
+            text-sm placeholder:text-white/30 outline-none
+            focus:border-emerald-500 hover:border-white/40 transition-colors duration-200"
+              />
+            </div>
+
+            {/* Password */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-white text-sm font-semibold">
+                Password <span className="text-emerald-400">*</span>
+              </label>
+              <input
+                type="password"
+                placeholder="Enter your password..."
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="bg-white/5 border border-white/20 rounded-lg px-3 py-2 text-white
+            text-sm placeholder:text-white/30 outline-none
+            focus:border-emerald-500 hover:border-white/40 transition-colors duration-200"
+              />
+            </div>
+
+            {/* Confirm Password */}
+            <div className="flex flex-col gap-1.5">
+              <label className="text-white text-sm font-semibold">
+                Confirm Password <span className="text-emerald-400">*</span>
+              </label>
+              <input
+                type="password"
+                placeholder="Confirm your password..."
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                className="bg-white/5 border border-white/20 rounded-lg px-3 py-2 text-white
+            text-sm placeholder:text-white/30 outline-none
+            focus:border-emerald-500 hover:border-white/40 transition-colors duration-200"
+              />
+            </div>
+
+            {/* Register Button */}
+            <button
+              onClick={onSubmit}
+              className="w-full mt-2 py-2.5 rounded-lg border border-white/20 text-white
+          text-sm font-semibold hover:bg-emerald-600 hover:border-emerald-600
+          transition-all duration-300 cursor-pointer"
+            >
               Register
             </button>
-          </form>
-          <hr className="w-11/12 mb-2 mt-2" />
-          <div>
-            <label>Already have an account ?</label>
+          </div>
+
+          {/* Divider */}
+          <div className="flex items-center gap-3 my-5">
+            <hr className="flex-1 border-white/10" />
+            <span className="text-white/30 text-xs">or</span>
+            <hr className="flex-1 border-white/10" />
+          </div>
+
+
+          {/* Login Redirect */}
+          <p className="text-center text-white/50 text-sm mt-6">
+            Already have an account?{" "}
             <button
-              className="hover:cursor-pointer hover:text-green-500 duration-500 ease-in-out ml-1"
               onClick={loginNav}
+              className="text-emerald-400 hover:text-emerald-300 font-semibold
+          transition-colors duration-300 cursor-pointer"
             >
               Login
             </button>
-          </div>
+          </p>
         </div>
       </div>
     </>

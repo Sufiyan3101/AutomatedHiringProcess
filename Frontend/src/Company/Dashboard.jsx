@@ -16,10 +16,9 @@ import useCompanySetup from "./Hooks/UseCompanySetup";
 const Dashboard = () => {
   const [forms, setForms] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [applicantCount, setApplicantCount] = useState(0);
   const [menuOpenId, setMenuOpenId] = useState(null);
   const navigate = useNavigate();
-  const { setUploading, hasDetails } = useCompanySetup();
+  const { setUpLoading: companyLoading, hasDetails } = useCompanySetup();
 
  useEffect(() => {
   const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -71,7 +70,6 @@ const Dashboard = () => {
         });
       }
 
-      setApplicantCount(totalApplicants); // total for stats card
       setForms(data);
 
     } catch (err) {
@@ -84,17 +82,17 @@ const Dashboard = () => {
   return () => unsubscribe();
 }, []);
 
-  if (setUploading) {
-    return (
-      <div className="min-h-screen bg-emerald-950 flex items-center justify-center">
-        <div className="w-5 h-5 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
+  if (companyLoading) {
+  return (
+    <div className="min-h-screen bg-emerald-950 flex items-center justify-center">
+      <div className="w-5 h-5 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
+    </div>
+  );
+}
 
-  if (!hasDetails) {
-    return <CompanyDetails onComplete={() => window.location.reload()} />;
-  }
+if (!hasDetails) {
+  return <CompanyDetails onComplete={() => window.location.reload()} />;
+}
 
   const handleDelete = async (formId) => {
     const confirmed = window.confirm(
