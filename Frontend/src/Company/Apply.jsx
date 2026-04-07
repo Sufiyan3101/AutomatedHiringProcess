@@ -16,12 +16,12 @@ import {
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
 const isExpired = (endDate) => {
   if (!endDate) return false;
-  return new Date(endDate) < new Date();
+  return endDate.toDate() < new Date();
 };
 
 const isNotStarted = (startDate) => {
   if (!startDate) return false;
-  return new Date(startDate) > new Date();
+  return startDate.toDate() > new Date();
 };
 
 // ─── FIELD RENDERER ───────────────────────────────────────────────────────────
@@ -222,66 +222,6 @@ const FieldRenderer = ({ field, value, onChange, error }) => {
               {opt}
             </button>
           ))}
-        </div>
-      );
-
-    case "file_upload":
-      return (
-        <div
-          className={`border-2 border-dashed rounded-lg p-6 text-center transition-all
-            ${error ? "border-red-400" : "border-gray-200 hover:border-emerald-400"}`}
-        >
-          <input
-            type="file"
-            id={`file-${field.id}`}
-            onChange={(e) => onChange(e.target.files[0])}
-            className="hidden"
-          />
-          <label htmlFor={`file-${field.id}`} className="cursor-pointer">
-            {value ? (
-              <div className="flex items-center justify-center gap-2 text-emerald-600">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-                <span className="text-sm font-medium">{value.name}</span>
-              </div>
-            ) : (
-              <div>
-                <svg
-                  className="w-8 h-8 text-gray-300 mx-auto mb-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                  />
-                </svg>
-                <p className="text-sm text-gray-500">
-                  <span className="text-emerald-600 font-medium">
-                    Click to upload
-                  </span>{" "}
-                  or drag and drop
-                </p>
-                <p className="text-xs text-gray-400 mt-1">
-                  PDF, DOC, DOCX up to 10MB
-                </p>
-              </div>
-            )}
-          </label>
         </div>
       );
 

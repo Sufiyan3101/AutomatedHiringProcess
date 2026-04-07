@@ -66,7 +66,7 @@ const ApplicantDetail = () => {
 
         {/* Forms list */}
         {!loading && applicants && (
-          <div className="flex w-full min-[480px]:w-3/4 min-[640px]:w-2/4 flex-col gap-3">
+          <div className="flex w-full min-[640px]:w-3/5 flex-col gap-3">
             <div className="bg-emerald-900 border border-emerald-700 rounded-xl px-5 py-4">
               <div className="mt-2">
                 <p className="text-xs text-gray-300">Email</p>
@@ -99,7 +99,7 @@ const ApplicantDetail = () => {
           </div>
         )}
         <h1 className="text-white text-xl font-bold mt-4 mb-4">Applicant Q/A</h1>
-        <div className="flex w-full min-[480px]:w-3/4 min-[640px]:w-2/4 flex-col gap-3 mt-2">
+        <div className="flex w-full min-[640px]:w-3/5 flex-col gap-3 mt-2">
           <div className="bg-emerald-900 border border-emerald-700 rounded-xl px-5 py-4">
             {!loading &&
               applicants &&

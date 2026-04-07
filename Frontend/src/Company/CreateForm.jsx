@@ -15,7 +15,6 @@ const FIELD_TYPES = {
   },
   checkbox: { label: "Checkboxes", icon: "☑", desc: "Pick many options" },
   dropdown: { label: "Dropdown", icon: "▾", desc: "Select from list" },
-  file_upload: { label: "File upload", icon: "↑", desc: "Upload a file" },
   date: { label: "Date", icon: "▦", desc: "Date picker" },
   number: { label: "Number", icon: "#", desc: "Numeric input" },
   email: { label: "Email", icon: "@", desc: "Email address" },
@@ -150,14 +149,6 @@ const FieldPreview = ({ field }) => {
           <div className="flex items-center gap-2 text-sm text-gray-500 border-b border-gray-300 pb-1">
             <span className="flex-1 italic">Choose</span>
             <span className="text-gray-400">▾</span>
-          </div>
-        </div>
-      );
-    case "file_upload":
-      return (
-        <div className="mt-3 flex items-center gap-2 text-sm text-gray-500">
-          <div className="border border-gray-300 rounded px-3 py-1.5 text-emerald-600 text-xs font-medium">
-            Add file
           </div>
         </div>
       );
@@ -577,7 +568,7 @@ const CreateForm = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-emerald-950">
+    <div className="flex flex-col h-screen overflow-hidden bg-emerald-950">
       <Header />
 
       {/* ── TOP ACTION BAR ── */}
@@ -601,7 +592,7 @@ const CreateForm = () => {
       </div>
 
       {/* ── MAIN LAYOUT ── */}
-      <div className="flex flex-1 justify-center px-4 py-6">
+      <div className="flex flex-1 justify-center px-4 py-6 overflow-y-auto">
         <div className="w-full max-w-3xl space-y-3">
           {/* Header Card */}
           <div className="bg-white rounded-lg shadow-sm border-t-8 border-emerald-600 overflow-hidden">
@@ -748,7 +739,7 @@ const CreateForm = () => {
                     min={new Date().toISOString().split("T")[0]}
                     onChange={(e) => setStartDate(e.target.value)}
                     className="w-full min-w-0 max-w-full appearance-none px-2 py-2.5 text-sm
-        text-gray-800 outline-none focus:ring-2 focus:ring-emerald-500"
+                      text-gray-800 outline-none focus:ring-2 focus:ring-emerald-500"
                   />
                 </div>
               </div>
@@ -765,7 +756,7 @@ const CreateForm = () => {
                     min={startDate || new Date().toISOString().split("T")[0]}
                     onChange={(e) => setEndDate(e.target.value)}
                     className="w-full min-w-0 max-w-full appearance-none px-2 py-2.5 text-sm
-        text-gray-800 outline-none focus:ring-2 focus:ring-emerald-500"
+                      text-gray-800 outline-none focus:ring-2 focus:ring-emerald-500"
                   />
                 </div>
               </div>

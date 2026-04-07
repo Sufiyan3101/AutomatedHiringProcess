@@ -129,10 +129,10 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen overflow-hidden bg-emerald-950">
       <Header />
       <div className="bg-emerald-950 flex-1 p-6">
-        <h1 className="text-white text-xl font-bold mb-4">My Forms</h1>
+        <h1 className="text-white text-xl font-bold mb-2">My Forms</h1>
 
         {/* Loading */}
         {loading && (
@@ -148,7 +148,7 @@ const Dashboard = () => {
 
         {/* Forms list */}
         {!loading && forms.length > 0 && (
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 flex-1 justify-center sm-px-2 py-6 overflow-y-auto">
             {forms.map((form) => (
               <div
                 key={form.id}
