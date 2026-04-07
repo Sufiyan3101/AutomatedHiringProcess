@@ -87,7 +87,7 @@ const FormDetail = () => {
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-emerald-950">
       <Header />
-      <div className="bg-emerald-950 flex-1 p-6">
+      <div className="bg-emerald-950 h-screen p-6">
         <h1 className="text-white text-xl font-bold mb-2">Applicant List</h1>
 
         {/* Loading */}
@@ -104,7 +104,7 @@ const FormDetail = () => {
 
         {/* Forms list */}
         {!loading && applicants.length > 0 && (
-          <div className="flex flex-col gap-3 flex-1 justify-center sm:px-4 py-6 overflow-y-auto">
+          <div className="flex flex-col gap-3 h-screen sm:px-4 py-6 overflow-y-auto">
             {applicants.map((applicant) => (
               <div
                 key={applicant.id}
