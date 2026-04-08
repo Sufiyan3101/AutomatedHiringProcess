@@ -365,7 +365,7 @@ const FieldCard = ({
 // ─── ADD QUESTION BUTTON WITH DROPDOWN ───────────────────────────────────────
 const AddQuestionButton = ({ onAdd }) => {
   return (
-    <div className="flex justify-center mt-4">
+    <div className="flex justify-center mt-4 pb-4">
       <button
         onClick={() => onAdd("short_text")}
         className="flex items-center gap-2 px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700
@@ -411,7 +411,7 @@ const CreateForm = () => {
 
   // const [jobDocument, setJobDocument] = useState(null); // the File object
   // const [uploadProgress, setUploadProgress] = useState(0); // 0-100
-  // const [uploading, setUploading] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -531,6 +531,27 @@ const CreateForm = () => {
       const user = auth.currentUser;
       if (!user) return;
 
+      const cleanedFields = fields.map((field) => {
+        const clean = {
+          id: field.id,
+          type: field.type,
+          label: field.label,
+          required: field.required,
+        };
+
+        // Only add options if it exists (multiple_choice, checkbox, dropdown)
+        if (field.options !== undefined) {
+          clean.options = field.options;
+        }
+
+        // Only add locked if it exists
+        if (field.locked !== undefined) {
+          clean.locked = field.locked;
+        }
+
+        return clean;
+      });
+
       // Upload to Cloudinary first if file selected
       // let documentURL = null;
       // let documentName = null;
@@ -548,7 +569,7 @@ const CreateForm = () => {
       const docRef = await addDoc(formsRef, {
         title: formTitle,
         description: formDesc,
-        fields: fields,
+        fields: cleanedFields,
         status: "active",
         startDate: Timestamp.fromDate(new Date(startDate)),
         endDate: Timestamp.fromDate(new Date(endDate)),
@@ -604,12 +625,17 @@ const CreateForm = () => {
                 className="w-full text-3xl font-normal text-gray-800 outline-none border-b-2
                   border-transparent focus:border-emerald-600 pb-1 mb-3 bg-transparent transition-colors"
               />
-              <input
+              <textarea
                 value={formDesc}
-                onChange={(e) => setFormDesc(e.target.value)}
+                onChange={(e) => {
+                  setFormDesc(e.target.value);
+                  e.target.style.height = "auto"; // reset first
+                  e.target.style.height = e.target.scrollHeight + "px"; // then grow
+                }}
                 placeholder="Form description (optional)"
+                rows={1}
                 className="w-full text-sm text-gray-500 outline-none border-b border-transparent
-                  focus:border-emerald-600 pb-1 bg-transparent transition-colors"
+               focus:border-emerald-600 pb-1 bg-transparent transition-colors resize-none overflow-hidden"
               />
             </div>
           </div>

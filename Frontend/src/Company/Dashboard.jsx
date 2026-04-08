@@ -180,6 +180,19 @@ const Dashboard = () => {
                       </button>
 
                       <button
+                         onClick={() => navigate(`/form-detail/${form.id}/ai-response`)}
+                        disabled={form.status !== "Expired"}
+                        className={`text-xs px-3 py-1.5 rounded-full transition-colors
+                        ${
+                          form.status !== "Expired"
+                          ? "bg-emerald-900 text-emerald-400 cursor-not-allowed opacity-60"
+                          : "bg-emerald-700 hover:bg-emerald-600 text-white cursor-pointer"
+                        }`}
+                      >
+                        View Result
+                      </button>
+
+                      <button
                         onClick={() => {
                           if (form.status === "Expired") return; // extra safety
                           const url = `${window.location.origin}/apply/${form.id}`;
@@ -236,6 +249,23 @@ const Dashboard = () => {
                             className="rounded-lg block w-full text-left px-4 py-2 text-sm text-white hover:bg-emerald-700"
                           >
                             View Applicants
+                          </button>
+
+                          <button
+                            onClick={() => {
+                              if (!isExpired) return;
+                              const url = `${window.location.origin}/apply/${form.id}`;
+                              navigator.clipboard.writeText(url);
+                            }}
+                            disabled={!isExpired}
+                            className={`rounded-lg block w-full text-left px-4 py-2 text-sm
+                            ${
+                              !isExpired
+                              ? "text-emerald-400 cursor-not-allowed opacity-60"
+                              : "text-white hover:bg-emerald-700"
+                            }`}
+                          >
+                            View Result
                           </button>
 
                           <button

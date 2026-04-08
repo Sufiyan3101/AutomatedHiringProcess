@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { auth } from "../src/firebase/firebase"; // adjust path
+import { auth } from "../src/firebase/firebase";
 import EditForm from "./Company/EditForm";
 import Dashboard from "./Company/Dashboard";
 import CreateForm from "./Company/CreateForm";
@@ -9,6 +9,7 @@ import FormDetail from "./Company/FormDetail";
 import ApplicantDetail from "./Company/ApplicantDetail";
 import Login from './Authentication/Login'
 import Register from './Authentication/Register'
+import AIResult from "./Company/AIResult";
 
 
 const ProtectedRoute = ({ children }) => {
@@ -82,6 +83,15 @@ const App = () => {
         element={
           <ProtectedRoute>
             <ApplicantDetail />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/form-detail/:formId/ai-response"
+        element={
+          <ProtectedRoute>
+            <AIResult />
           </ProtectedRoute>
         }
       />
