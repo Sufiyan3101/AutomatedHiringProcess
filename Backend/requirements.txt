@@ -1,6 +1,6 @@
-fastapi
-uvicorn[standard]
-firebase-admin
-python-dotenv
-apscheduler
-google-generativeai
+fastapi==0.110.0
+uvicorn[standard]==0.29.0
+firebase-admin==6.5.0
+google-generativeai==0.7.2
+python-dotenv==1.0.1
+apscheduler==3.10.4
