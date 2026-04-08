@@ -66,7 +66,7 @@ const AIResult = () => {
 
       <div className="bg-emerald-950 flex-1 flex items-center flex-col p-6">
         <h1 className="text-white text-xl font-bold mt-4 mb-4">
-          Applicant Q/A
+          Renking
         </h1>
 
         {/* Loading */}
