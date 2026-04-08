@@ -23,7 +23,7 @@ db = firestore.client()
 
 # ── Gemini setup ─────────────────────────────────────────────────────────────
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel("gemini-3-flash-preview ")
+model = genai.GenerativeModel("gemini-3-flash-preview")
 
 # ── Core matching function ───────────────────────────────────────────────────
 def run_ai_matching():
