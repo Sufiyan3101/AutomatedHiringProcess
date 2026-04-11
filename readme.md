@@ -178,8 +178,6 @@ Sends to Gemini 1.5 Flash
 Gemini returns top 3 candidates with score + reason (JSON)
         ↓
 Results saved to Firestore → displayed on Dashboard
-        ↓
-HR notified via email
 ```
 
 ---
@@ -202,16 +200,6 @@ companies/
 
 ---
 
-## 📸 Screenshots
-
-> Add your screenshots here
-
-| Dashboard | Form Builder | Apply Page | AI Results |
-|---|---|---|---|
-| ![dashboard]() | ![builder]() | ![apply]() | ![results]() |
-
----
-
 ## 🤝 Contributing
 
 Pull requests are welcome. For major changes, please open an issue first.
@@ -227,8 +215,8 @@ MIT License — feel free to use, modify and distribute.
 ## 👤 Author
 
 **Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- LinkedIn: [yourlinkedin](https://linkedin.com/in/yourlinkedin)
+- GitHub: [@yourusername](https://github.com/Sufiyan3101)
+- LinkedIn: [yourlinkedin](https://www.linkedin.com/in/khansufiyann/)
 
 ---
 
