@@ -216,7 +216,7 @@ MIT License — feel free to use, modify and distribute.
 
 **👋 Connect with Me**
 - GitHub: [@Sufiyan3101](https://github.com/Sufiyan3101)
-- **LinkedIn: [Khan Sufiyan](https://www.linkedin.com/in/khansufiyann/)
+- LinkedIn: [Khan Sufiyan](https://www.linkedin.com/in/khansufiyann/)
 
 ---
 
