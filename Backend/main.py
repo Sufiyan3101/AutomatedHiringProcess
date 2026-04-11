@@ -1,16 +1,31 @@
 from fastapi import FastAPI
 import firebase_admin
 from firebase_admin import credentials, firestore
+from fastapi.middleware.cors import CORSMiddleware
 import os
 import json
 from dotenv import load_dotenv
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import datetime, timezone
 import google.generativeai as genai
+from pydantic import BaseModel
+from email_service import send_applicant_confirmation, send_hr_notification
 
 load_dotenv()
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:5173",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ── Firebase setup ──────────────────────────────────────────────────────────
 FIREBASE_ADMIN = json.loads(os.getenv("FIREBASE_ADMIN_SDK"))
@@ -213,3 +228,36 @@ def get_results(company_id: str, form_id: str):
             "aiResults": data.get("aiResults", []),
         }
     return {"error": "Form not found"}
+
+
+class ApplicationSubmission(BaseModel):
+    applicant_name: str
+    applicant_email: str
+    hr_email: str        
+    job_title: str
+    application_id: str
+
+@app.post("/notify-application")
+def notify_application(data: ApplicationSubmission):
+    try:
+        # Email to applicant
+        send_applicant_confirmation(
+            applicant_email=data.applicant_email,
+            applicant_name=data.applicant_name,
+            job_title=data.job_title
+        )
+
+        # Email to HR
+        send_hr_notification(
+            hr_email=data.hr_email,
+            applicant_name=data.applicant_name,
+            applicant_email=data.applicant_email,
+            job_title=data.job_title,
+            application_id=data.application_id
+        )
+
+        return {"status": "emails sent"}
+    except Exception as e:
+        print(f"Email error: {e}")
+        return {"status": "failed", "error": str(e)}
+

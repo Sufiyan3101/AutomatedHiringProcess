@@ -17,6 +17,8 @@ const Dashboard = () => {
   const [forms, setForms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [menuOpenId, setMenuOpenId] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
   const { setUpLoading: companyLoading, hasDetails } = useCompanySetup();
 
@@ -128,10 +130,26 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden bg-emerald-950">
+    <div className="relative flex flex-col h-screen overflow-hidden bg-emerald-950">
       <Header />
-      <div className="bg-emerald-950 h-screen p-6 min-h-0">
-        <h1 className="text-white text-xl font-bold mb-2">My Forms</h1>
+      {showAlert && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="bg-white text-black p-4 rounded-2xl shadow-lg">
+            <p className="text-xl font-bold mb-1">Message</p>
+            <div className="alertContent text-center">
+              <p>{errorMessage}</p>
+              <button
+                className="mt-2 ml-[80%] px-2 py-1 bg-emerald-600 text-white rounded hover:cursor-pointer"
+                onClick={() => setShowAlert(false)}
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      <div className="bg-emerald-950 flex flex-col flex-1 min-h-0">
+        <h1 className="text-white text-xl p-6 pb-0 font-bold mb-2">My Forms</h1>
 
         {/* Loading */}
         {loading && (
@@ -147,7 +165,7 @@ const Dashboard = () => {
 
         {/* Forms list */}
         {!loading && forms.length > 0 && (
-          <div className="flex flex-col gap-3 h-screen sm:px-2 py-6 overflow-y-auto">
+          <div className="flex flex-col gap-y-3 flex-1 overflow-y-auto min-h-0 thin-scrollbar p-6 pt-2">
             {forms.map((form) => {
               const status = form.status?.toLowerCase();
               const isExpired = status === "expired";
@@ -180,13 +198,15 @@ const Dashboard = () => {
                       </button>
 
                       <button
-                         onClick={() => navigate(`/form-detail/${form.id}/ai-response`)}
+                        onClick={() =>
+                          navigate(`/form-detail/${form.id}/ai-response`)
+                        }
                         disabled={form.status !== "Expired"}
                         className={`text-xs px-3 py-1.5 rounded-full transition-colors
                         ${
                           form.status !== "Expired"
-                          ? "bg-emerald-900 text-emerald-400 cursor-not-allowed opacity-60"
-                          : "bg-emerald-700 hover:bg-emerald-600 text-white cursor-pointer"
+                            ? "bg-emerald-900 text-emerald-400 cursor-not-allowed opacity-60"
+                            : "bg-emerald-700 hover:bg-emerald-600 text-white cursor-pointer"
                         }`}
                       >
                         View Result
@@ -194,17 +214,18 @@ const Dashboard = () => {
 
                       <button
                         onClick={() => {
-                          if (form.status === "Expired") return; // extra safety
+                          if (form.status === "Expired") return;
                           const url = `${window.location.origin}/apply/${form.id}`;
                           navigator.clipboard.writeText(url);
-                          alert("Link copied!\n" + url);
+                          setErrorMessage("Link copied to clipboard");
+                          setShowAlert(true);
                         }}
                         disabled={form.status === "Expired"}
                         className={`text-xs px-3 py-1.5 rounded-full transition-colors
                         ${
                           form.status === "Expired"
-                          ? "bg-emerald-900 text-emerald-400 cursor-not-allowed opacity-60"
-                          : "bg-emerald-700 hover:bg-emerald-600 text-white cursor-pointer"
+                            ? "bg-emerald-900 text-emerald-400 cursor-not-allowed opacity-60"
+                            : "bg-emerald-700 hover:bg-emerald-600 text-white cursor-pointer"
                         }`}
                       >
                         Copy Link
@@ -252,17 +273,15 @@ const Dashboard = () => {
                           </button>
 
                           <button
-                            onClick={() => {
-                              if (!isExpired) return;
-                              const url = `${window.location.origin}/apply/${form.id}`;
-                              navigator.clipboard.writeText(url);
-                            }}
+                            onClick={() =>
+                              navigate(`/form-detail/${form.id}/ai-response`)
+                            }
                             disabled={!isExpired}
                             className={`rounded-lg block w-full text-left px-4 py-2 text-sm
                             ${
                               !isExpired
-                              ? "text-emerald-400 cursor-not-allowed opacity-60"
-                              : "text-white hover:bg-emerald-700"
+                                ? "text-emerald-400 cursor-not-allowed opacity-60"
+                                : "text-white hover:bg-emerald-700"
                             }`}
                           >
                             View Result
@@ -273,13 +292,15 @@ const Dashboard = () => {
                               if (isExpired) return;
                               const url = `${window.location.origin}/apply/${form.id}`;
                               navigator.clipboard.writeText(url);
+                              setErrorMessage("Link copied to clipboard");
+                              setShowAlert(true);
                             }}
                             disabled={isExpired}
                             className={`rounded-lg block w-full text-left px-4 py-2 text-sm
                             ${
                               isExpired
-                              ? "text-emerald-400 cursor-not-allowed opacity-60"
-                              : "text-white hover:bg-emerald-700"
+                                ? "text-emerald-400 cursor-not-allowed opacity-60"
+                                : "text-white hover:bg-emerald-700"
                             }`}
                           >
                             Copy Link
@@ -296,7 +317,7 @@ const Dashboard = () => {
                                 !isUpcoming
                                   ? "text-emerald-400 cursor-not-allowed opacity-60"
                                   : "text-white hover:bg-emerald-700"
-        }                       `}
+                              }                       `}
                           >
                             Edit
                           </button>

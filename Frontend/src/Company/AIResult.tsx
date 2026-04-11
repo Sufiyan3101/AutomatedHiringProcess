@@ -61,10 +61,10 @@ const AIResult = () => {
 
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen overflow-hidded">
       <Header />
 
-      <div className="bg-emerald-950 flex-1 flex items-center flex-col p-6">
+      <div className="bg-emerald-950 flex-1 flex items-center flex-col p-6 thin-scrollbar">
         <h1 className="text-white text-xl font-bold mt-4 mb-4">
           Ranking
         </h1>
@@ -84,7 +84,7 @@ const AIResult = () => {
         )}
 
         {!loading && results?.aiResults && (
-          <div className="flex w-full min-[640px]:w-3/5 flex-col gap-3 mt-2">
+          <div className="flex w-full min-[640px]:w-3/5 flex-col gap-3 mt-2 thin-scrollbar">
 
             {results.aiResults.map((res: any) => (
               <div

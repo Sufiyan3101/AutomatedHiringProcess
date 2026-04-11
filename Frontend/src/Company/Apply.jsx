@@ -411,13 +411,33 @@ const Apply = () => {
         };
       });
 
-      await addDoc(applicationsRef, {
+      const docRef = await addDoc(applicationsRef, {
         applicantData: formattedAnswers,
-        applicantEmail: emailValue, 
+        applicantEmail: emailValue,
         status: "Application Submitted",
         submittedAt: serverTimestamp(),
         formId,
         companyId,
+      });
+
+      // ── Send emails via FastAPI ──
+      const applicantName =
+        answers["field_name"]?.value || // adjust field id
+        answers[
+          Object.keys(answers).find((k) => answers[k]?.type === "short_text")
+        ]?.value ||
+        "Applicant";
+
+      await fetch("http://localhost:8000/notify-application", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          applicant_name: applicantName,
+          applicant_email: emailValue,
+          hr_email: form.hrEmail || "hr@yourcompany.com", // save hrEmail when creating form
+          job_title: form.title,
+          application_id: docRef.id,
+        }),
       });
 
       setSubmitted(true);
@@ -503,7 +523,7 @@ const Apply = () => {
   // ── Main form ──
   return (
     <>
-        <div className="min-h-screen bg-emerald-950 py-10 px-4">
+      <div className="min-h-screen bg-emerald-950 py-10 px-4">
         <div className="max-w-2xl mx-auto space-y-4">
           <div className="bg-white rounded-xl shadow-sm border-t-8 border-emerald-600 overflow-hidden">
             <div className="p-7">
@@ -515,9 +535,13 @@ const Apply = () => {
                   Description : {form.description}
                 </p>
               )}
-              <p className="text-sm font-semibold">Name : {companyData.companyName}</p>
-              <p className="text-sm font-semibold">Address : {companyData.address}</p>
-          <p className="text-sm font-semibold">City : {companyData.city}</p>
+              <p className="text-sm font-semibold">
+                Name : {companyData.companyName}
+              </p>
+              <p className="text-sm font-semibold">
+                Address : {companyData.address}
+              </p>
+              <p className="text-sm font-semibold">City : {companyData.city}</p>
               {form.endDate && (
                 <div
                   className="mt-4 inline-flex font-semibold items-center gap-1.5 text-xs text-amber-600
@@ -537,7 +561,9 @@ const Apply = () => {
                     />
                   </svg>
                   Closes on{" "}
-                  {new Date(form.endDate?.toDate?.() ?? null).toLocaleDateString("en-US", {
+                  {new Date(
+                    form.endDate?.toDate?.() ?? null,
+                  ).toLocaleDateString("en-US", {
                     day: "numeric",
                     month: "long",
                     year: "numeric",

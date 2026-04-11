@@ -412,8 +412,11 @@ const CreateForm = () => {
   // const [jobDocument, setJobDocument] = useState(null); // the File object
   // const [uploadProgress, setUploadProgress] = useState(0); // 0-100
   const [uploading, setUploading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [showAlert, setShowAlert] = useState(false);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [hrEmail, setHrEmail] = useState("");
 
   // const uploadDocument = async (file) => {
   //   const formData = new FormData();
@@ -505,23 +508,28 @@ const CreateForm = () => {
 
   const handleSave = async () => {
     if (!formTitle.trim()) {
-      alert("Please add a form title");
+      setErrorMessage("Please add a form title");
+      setShowAlert(true);
       return;
     }
     if (fields.length === 0) {
-      alert("Please add at least one question");
+      setErrorMessage("Please add at least one question");
+      setShowAlert(true);
       return;
     }
     if (!startDate) {
-      alert("Please set a start date");
+      setErrorMessage("Please set a start date");
+      setShowAlert(true);
       return;
     }
     if (!endDate) {
-      alert("Please set an end date");
+      setErrorMessage("Please set an end date");
+      setShowAlert(true);
       return;
     }
     if (new Date(endDate) <= new Date(startDate)) {
-      alert("End date must be after start date");
+      setErrorMessage("End date must be after start date");
+      setShowAlert(true);
       return;
     }
 
@@ -570,6 +578,7 @@ const CreateForm = () => {
         title: formTitle,
         description: formDesc,
         fields: cleanedFields,
+        hrEmail: hrEmail,
         status: "active",
         startDate: Timestamp.fromDate(new Date(startDate)),
         endDate: Timestamp.fromDate(new Date(endDate)),
@@ -582,7 +591,8 @@ const CreateForm = () => {
     } catch (err) {
       console.error(err);
       setUploading(false);
-      alert("Failed to save. Try again.");
+      errorMessage("Failed to save. Try again.");
+      setShowAlert(true);
     } finally {
       setSaving(false);
     }
@@ -591,6 +601,22 @@ const CreateForm = () => {
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-emerald-950">
       <Header />
+      {showAlert && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="bg-white text-black p-4 rounded-2xl shadow-lg">
+            <p className="text-xl font-bold mb-1">Message</p>
+            <div className="alertContent text-center">
+              <p>{errorMessage}</p>
+              <button
+                className="mt-2 ml-[80%] px-2 py-1 bg-emerald-600 text-white rounded hover:cursor-pointer"
+                onClick={() => setShowAlert(false)}
+              >
+                OK
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ── TOP ACTION BAR ── */}
       <div className="bg-emerald-950 border-b border-emerald-900 px-6 py-2 flex items-center justify-between sticky top-0 z-20 shadow-sm">
@@ -613,7 +639,7 @@ const CreateForm = () => {
       </div>
 
       {/* ── MAIN LAYOUT ── */}
-      <div className="flex flex-1 justify-center px-4 py-6 overflow-y-auto">
+      <div className="flex flex-1 justify-center px-4 py-6 overflow-y-auto thin-scrollbar">
         <div className="w-full max-w-3xl space-y-3">
           {/* Header Card */}
           <div className="bg-white rounded-lg shadow-sm border-t-8 border-emerald-600 overflow-hidden">
@@ -750,6 +776,20 @@ const CreateForm = () => {
                 </div>
               )}
             </div> */}
+
+            <div>
+              <label className="text-sm font-semibold text-gray-700">
+                HR Email <span className="text-red-500">*</span>
+              </label>
+              <input
+                type="email"
+                value={hrEmail}
+                onChange={(e) => setHrEmail(e.target.value)}
+                placeholder="hr@company.com"
+                className="w-full border border-gray-200 rounded-lg px-3.5 py-2.5 text-sm
+                  outline-none focus:ring-2 focus:ring-emerald-500"
+              />
+            </div>
 
             {/* Start + End Date */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

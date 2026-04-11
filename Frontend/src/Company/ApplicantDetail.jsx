@@ -47,9 +47,9 @@ const ApplicantDetail = () => {
   console.log("applicant:", applicants);
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen overflow-hidden">
       <Header />
-      <div className="bg-emerald-950 flex-1 flex items-center flex-col p-6">
+      <div className="bg-emerald-950 flex-1 overflow-auto flex items-center flex-col p-6 thin-scrollbar">
         <h1 className="text-white text-xl font-bold mb-4">Applicant Form Details</h1>
 
         {/* Loading */}
